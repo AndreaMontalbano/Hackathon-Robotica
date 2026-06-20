@@ -120,10 +120,18 @@ class RobotController:
         try:
             source       = SOURCE_TYPE_SIM if self.mode == "simulation" else SOURCE_TYPE_EDGE
             self._client = Cyberwave(api_key=api_key, source_type=source, environment_id=env_id)
-            self._client.affect("simulation")
+            # affect() deve combaciare con source_type: 'simulation' per la sim,
+            # 'live' per il robot reale. Un mismatch confonde i publisher MQTT.
+            self._client.affect("simulation" if self.mode == "simulation" else "live")
 
             self._twin = self._client.twin(twin_id=twin_id, environment_id=env_id)
             logger.info(f"Twin '{self._twin.name}' (uuid={getattr(self._twin,'uuid','?')[:8]}...) connesso")
+
+            # PERF FIX: il SDK rifà un fetch REST dell'asset (~46KB) a OGNI
+            # joints.get()/set() per leggere lo schema joint. A 30fps il
+            # controllo diventa inutilizzabile (~6s per comando). Avvolgiamo
+            # assets.get() con una cache: lo schema è immutabile nella sessione.
+            self._install_asset_cache()
 
             if self.mode == "simulation":
                 self._simulation_id = _start_simulation(api_key, env_id)
@@ -148,6 +156,28 @@ class RobotController:
             logger.error(f"Connessione fallita: {e}")
             self.mode   = "dry_run"
             self._client = self._twin = None
+
+    def _install_asset_cache(self):
+        """Memoizza client.assets.get() — lo schema asset non cambia durante la
+        sessione, quindi evitiamo di rifare il fetch REST a ogni comando joint."""
+        try:
+            assets_mgr = self._client.assets
+            original   = assets_mgr.get
+            cache: Dict[str, object] = {}
+
+            def cached_get(asset_id, *a, **kw):
+                if asset_id not in cache:
+                    cache[asset_id] = original(asset_id, *a, **kw)
+                return cache[asset_id]
+
+            assets_mgr.get = cached_get
+            # Pre-warm: popola la cache subito con l'asset del nostro twin
+            aid = getattr(self._twin, "asset_id", None)
+            if aid:
+                cached_get(aid)
+            logger.info("Cache schema asset attiva (no refetch per comando)")
+        except Exception as e:
+            logger.warning(f"Impossibile installare cache asset: {e}")
 
     def _wait_for_simulation_running(self, api_key: str, env_id: str, timeout: float = 20.0):
         """Polling finché status diventa 'running' (max timeout secondi)."""
