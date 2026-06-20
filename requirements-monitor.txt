@@ -1,0 +1,7 @@
+# Extra dependency for the InterHuman AI operator monitor (src/operator_monitor.py).
+# Everything else (opencv-python, mediapipe, python-dotenv, pyyaml) is already
+# pulled in by the base requirements.txt.
+#
+#   pip install -r requirements-monitor.txt
+#
+websocket-client>=1.7
