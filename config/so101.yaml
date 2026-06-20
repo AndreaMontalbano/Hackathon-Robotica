@@ -1,0 +1,46 @@
+# SO-101 joint configuration
+# Edit after physical calibration with your specific robot unit.
+
+robot_name: "so-101-twin"       # Cyberwave twin ID (change to match yours)
+default_mode: "simulation"      # simulation | real | dry_run
+
+joints:
+  "1":
+    name: "Shoulder Pan"
+    min_deg: -90
+    max_deg: 90
+    home_deg: 0
+  "2":
+    name: "Shoulder Tilt"
+    min_deg: -90
+    max_deg: 90
+    home_deg: 0
+  "3":
+    name: "Elbow Flex"
+    min_deg: 0
+    max_deg: 135
+    home_deg: 90
+  "4":
+    name: "Wrist Flex"
+    min_deg: -90
+    max_deg: 90
+    home_deg: 0
+  "5":
+    name: "Wrist Roll"
+    min_deg: -90
+    max_deg: 90
+    home_deg: 0
+  "6":
+    name: "Gripper"
+    min_deg: 0
+    max_deg: 100
+    home_deg: 50
+
+pose_tracker:
+  confidence: 0.7
+  use_hands: true
+  smoothing: 0.4
+
+camera:
+  index: 0
+  fps: 30
