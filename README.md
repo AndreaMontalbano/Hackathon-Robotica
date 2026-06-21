@@ -7,6 +7,7 @@ A webcam reads your hand gesture, the system confirms it, and the robot executes
 
 Built at hackathon speed, designed for extensibility.
 
+[Demo Video](https://youtu.be/32ebCxhgnBs?si=yqWxutw_IAdO-RMf)
 ---
 
 ## How it works
