@@ -1,13 +1,14 @@
-# SO-101 Gesture Control
-
+# SO-101 Gesture Control: WaveArm
+[WaveArm](logo.png)
 > Control a robotic arm with hand gestures — MediaPipe + Cyberwave SDK.
 
 Point your finger and the SO-101 moves. No wearables, no calibration, no complex mapping.
 A webcam reads your hand gesture, the system confirms it, and the robot executes.
 
-Built at hackathon speed, designed for extensibility.
+Built at [hackathon](https://luma.com/mmc68m0b?locale=it) speed, designed for extensibility.
 
 [Demo Video](https://youtu.be/32ebCxhgnBs?si=yqWxutw_IAdO-RMf)
+
 ---
 
 ## How it works
