@@ -1,5 +1,6 @@
 # SO-101 Gesture Control: WaveArm
-![WaveArm](logo.png)
+<img src="logo.png" width="300" alt="Logo">
+
 > Control a robotic arm with hand gestures — MediaPipe + Cyberwave SDK.
 
 Point your finger and the SO-101 moves. No wearables, no calibration, no complex mapping.
