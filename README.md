@@ -1,7 +1,10 @@
 # SO-101 Gesture Control: WaveArm
+
 > Control a robotic arm with hand gestures — MediaPipe + Cyberwave SDK. Emotion recognition with Interhuman API.
 
 > Authors: Elia Coppiardi, Matteo Magnani, Andrea Montalbano, and Gianluca Morotti
+
+>  🏆 1st Prize Winner – Interhuman AI Category - 🏆 Most Empathetic Robot Award – Interhuman AI Category - 🏆 Punkest Use of Robots Award – Devpunks Category
 
 <p align="center">
 <img src="logo.png" width="300" alt="Logo">
